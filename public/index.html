@@ -1,12 +1,19 @@
 <head></head>
 <body>
+<script src="socket.io.js"></script>
 <script src="zepto.min.js"></script>
 <script src="touch.js"></script>
 <script>
 function tap() {
-  alert('tap');
+  console.log('tap');
 }
 
 $('body').on('click', tap).on('tap', tap);
+
+var socket = io.connect(window.location.href);
+socket.on('news', function (data) {
+  console.log(data);
+  // socket.emit('my other event', { my: 'data' });
+});
 </script>
 </body>
