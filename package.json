@@ -11,6 +11,6 @@
   "dependencies": {
     "ar-drone": "~0.3.1",
     "express": "~3.4.8",
-    "socket.io-client": "~0.9.16"
+    "socket.io": "~0.9.16"
   }
 }
