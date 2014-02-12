@@ -14,6 +14,7 @@ function quit(){
   client.stop();
   client.land();
   gameon = false;
+  client.emit('game-over');
 //  console.log('Killing!')
 //  setTimeout(process.exit, 1000);
   // prevent being called again
@@ -60,4 +61,3 @@ function jump(){
 
 module.exports.jump = jump;
 module.exports.clientEmitter = client;
-module.exports.gameOver = gameOver;
