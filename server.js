@@ -9,16 +9,19 @@ var gameon = false;
 input.on('quit', quit);
 input.on('enter', jump);
 
-
-function quit(){
+function gameover(){
+  gameon = false;
   client.stop();
   client.land();
-  gameon = false;
   client.emit('game-over');
-//  console.log('Killing!')
-//  setTimeout(process.exit, 1000);
+}
+
+function quit(){
+  gameover();  
+ console.log('Killing!')
+ setTimeout(process.exit, 1000);
   // prevent being called again
-//  quit = function(){};
+ quit = function(){};
   
 }
 
@@ -29,7 +32,7 @@ function start(){
     // If height below tolerance, end the game!
     if(data.demo.altitude < minDroneHeight){
       console.log('GAME OVER!!!');
-      quit();
+      gameover();
     }
   });
 }
