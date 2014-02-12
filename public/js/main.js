@@ -21,25 +21,31 @@ $(window).on('resize', function(){
 	dims.width = window.innerWidth;
 })
 
+var lastPos = 0;
+
 socket.on('drone-status', function (alt) {
-	console.log(alt);
 	if(!alt) return;
 
 	var heightInM = alt;
 
 	var newHeight = (((heightInM / maxHeight) * dims.height) * -1) + dims.height + (dims.height/10);
 
-	console.log(alt, newHeight);
+	var rotation = newHeight - lastPos;
 
-	TweenLite.to(birdEl, .3, {
+	console.log(rotation)
+
+	lastPos = newHeight;
+
+	TweenLite.to(birdEl, .1, {
 		y: newHeight
 	})
 });
 
-socket.on('game-over', function(data){
-	var gameOverFlag = true;
-	gameOver();
-})
+socket.on('game-over', gameOver)
+
+socket.on('get-ready', getReady);
+
+socket.on('game-started', gameStarted);
 
 function gameOver(){
 	TweenLite.to(gameOverEl, .2, {
@@ -51,18 +57,20 @@ function gameOver(){
 	})	
 }
 
-function gameStart(){
+function getReady(){
 	TweenLite.to(getReadyEl, .2, {
 		opacity: 1
 	})
 
-	setTimeout(function(){
-		TweenLite.to(getReadyEl, .2, {
-			opacity: 0
-		})		
-	}, 500)
+	TweenLite.to(gameOverEl, .2, {
+		opacity:0
+	})
+}
 
-	gameOverFlag = false;
+function gameStarted(){
+	TweenLite.to([getReadyEl, gameOverEl], .2, {
+		opacity: 0
+	})	
 }
 
 function tap() {
