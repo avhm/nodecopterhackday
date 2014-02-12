@@ -3,10 +3,11 @@ var util = require('util');
 var arDrone = require('ar-drone');
 var client = arDrone.createClient();
 
-var minDroneHeight = .3;
+var minDroneHeight = .4;
 var gameon = false;
 
 input.on('quit', quit);
+input.on('enter', jump);
 
 client.takeoff();
 
@@ -14,7 +15,7 @@ function quit(){
   client.stop();
   client.land();
   console.log('Killing!')
-  setTimeout(process.exit, 200);
+  setTimeout(process.exit, 1000);
 }
 
 function start(){
@@ -29,10 +30,13 @@ function start(){
 }
 
 var currentJump;
-input.on('enter', function() {
+
+function jump(){
 
   if(!gameon){
     start();
+    client.front(.1);
+    console.log('BATTERY STATUS:', client.battery());
     gameon = true;
   }
 
@@ -43,7 +47,7 @@ input.on('enter', function() {
   client.up(1);
 
   currentJump = setTimeout(function(){
-    client.down(.7);
+    client.down(1);
   }, 400);
 
-});
+}
