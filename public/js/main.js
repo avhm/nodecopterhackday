@@ -18,11 +18,6 @@ TweenLite.set(birdEl, {
 $(window).on('resize', function(){
 	dims.height = window.innerHeight;
 	dims.width = window.innerWidth;
-
-	// TweenLite.set(birdEl, {
-	// 	x: dims.width/2,
-	// 	y: dims.height/2
-	// });
 })
 
 socket.on('drone-status', function (alt) {
@@ -41,8 +36,30 @@ socket.on('drone-status', function (alt) {
 });
 
 socket.on('game-over', function(data){
-
+	gameOver();
 })
+
+function gameOver(){
+	TweenLite.to(gameOverEl, .2, {
+		opacity: 1
+	})
+
+	TweenLite.to(getReadyEl, .2, {
+		opacity: 0
+	})	
+}
+
+function gameStart(){
+	TweenLite.to(getReadyEl, .2, {
+		opacity: 1
+	})
+
+	setTimeout(function(){
+		TweenLite.to(getReadyEl, .2, {
+			opacity: 0
+		})		
+	}, 500)
+}
 
 function tap() {
   console.log('tap');
