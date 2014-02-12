@@ -2,7 +2,7 @@ var express = require('express');
 var app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server),
-  flappyDrone = require('server'),
+  flappyDrone = require('./server'),
   client = flappyDrone.clientEmitter,
   droneStatus = null;
 

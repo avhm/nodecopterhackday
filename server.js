@@ -16,6 +16,9 @@ function quit(){
   client.land();
   console.log('Killing!')
   setTimeout(process.exit, 1000);
+  // prevent being called again
+  quit = function(){};
+  
 }
 
 function start(){
