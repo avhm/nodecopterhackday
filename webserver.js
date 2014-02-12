@@ -19,8 +19,14 @@ io.sockets.on('connection', function (socket) {
     socket.emit('drone-status', data.demo.altitude);
   });
 
-  client.on('game-over', function(){
-  	socket.emit('game-over', true);
+  game.on('over', function() {
+    socket.emit('game-over');
+  });
+  game.on('setting-up', function() {
+    socket.emit('get-ready');
+  });
+  game.on('started', function() {
+    socket.emit('game-started');
   });
   
   socket.on('tap', function (data) {
