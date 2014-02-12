@@ -2,6 +2,9 @@ var socket = io.connect(window.location.href);
 var birdEl = document.querySelector('.bird');
 var gameOverEl = document.querySelector('.gameOver');
 var getReadyEl = document.querySelector('.getReady');
+
+var levelWrapperEl = document.querySelector('.levelWrapper');
+
 var gameOverFlag = true;
 
 var maxHeight = 2;
@@ -22,15 +25,24 @@ $(window).on('resize', function(){
 })
 
 var lastPos = 0;
+var frame = 0
+
+function moveBg(){
+	levelWrapperEl.style.backgroundPositionX = frame + 'px'
+	frame -= 1
+	requestAnimationFrame(moveBg);
+}
+
+moveBg()
 
 socket.on('drone-status', function (alt) {
 	if(!alt) return;
 
 	var heightInM = alt;
 	var newHeight = (((heightInM / maxHeight) * dims.height) * -1) + dims.height + (dims.height/10);
-	var heightDiff = lastPos - newHeight;
+	var heightDiff =  newHeight - lastPos;
 
-	console.log(heightDiff);
+	// console.log(heightDiff);
 
 	lastPos = newHeight;
 
@@ -73,10 +85,6 @@ function gameStarted(){
 function tap() {
   console.log('tap');
   socket.emit('tap');
-  if(gameOverFlag){
-  	console.log('starting game!');
-  	gameStart();
-  }
 }
 
 TweenLite.set(gameOverEl, {

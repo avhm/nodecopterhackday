@@ -1,4 +1,5 @@
-var game = new require('events').EventEmitter();
+var EventEmitter = require('events').EventEmitter;
+var game = new EventEmitter();
 var input = require('./input');
 var util = require('util');
 var arDrone = require('ar-drone');
@@ -25,6 +26,7 @@ function setup() {
   if(gameState !== 'OVER') return;
   console.log('SETTING UP!!!');
   console.log('BATTERY STATUS:', client.battery());
+  client.disableEmergency()
   client.takeoff();
 
   gameState = 'SETTINGUP';
@@ -33,7 +35,7 @@ function setup() {
     console.log('STARTED!!!');
     gameState = 'STARTED';
     game.emit('started');
-  }, 15000);
+  }, 5000);
 }
 
 function quit(){
@@ -51,7 +53,7 @@ var currentJump;
 function jump() {
 
   if(gameState === 'OVER') {
-    start();
+    setup();
   } else if(gameState === 'STARTED'){
     if(currentJump){
       clearTimeout(currentJump);
@@ -68,7 +70,7 @@ function jump() {
 
 
 client.on('navdata', function(data){
-  if(!data.demo || !gameon) return;
+  if(!data.demo) return;
   // If height below tolerance, end the game!
   if(data.demo.altitude < minDroneHeight && gameState === 'STARTED'){
     gameover();
