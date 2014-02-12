@@ -27,24 +27,21 @@ socket.on('drone-status', function (alt) {
 	if(!alt) return;
 
 	var heightInM = alt;
-
 	var newHeight = (((heightInM / maxHeight) * dims.height) * -1) + dims.height + (dims.height/10);
+	var heightDiff = lastPos - newHeight;
 
-	var rotation = newHeight - lastPos;
-
-	console.log(rotation)
+	console.log(heightDiff);
 
 	lastPos = newHeight;
 
 	TweenLite.to(birdEl, .1, {
-		y: newHeight
+		y: newHeight,
+		rotation: heightDiff
 	})
 });
 
 socket.on('game-over', gameOver)
-
 socket.on('get-ready', getReady);
-
 socket.on('game-started', gameStarted);
 
 function gameOver(){
