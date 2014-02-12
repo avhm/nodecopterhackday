@@ -3,7 +3,7 @@ var util = require('util');
 var arDrone = require('ar-drone');
 var client = arDrone.createClient();
 
-var minDroneHeight = .4;
+var minDroneHeight = .2;
 var gameon = false;
 
 input.on('quit', quit);
@@ -40,7 +40,7 @@ function jump(){
 
   if(!gameon){
     start();
-    client.front(.1);
+    // client.front(.1);
     console.log('BATTERY STATUS:', client.battery());
     gameon = true;
   }
@@ -54,7 +54,7 @@ function jump(){
 
   currentJump = setTimeout(function(){
     client.down(1);
-  }, 400);
+  }, 500);
 
 }
 

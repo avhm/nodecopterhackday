@@ -1,7 +1,9 @@
 var socket = io.connect(window.location.href);
 var birdEl = document.querySelector('.bird');
+var gameOverEl = document.querySelector('.gameOver');
+var getReadyEl = document.querySelector('.getReady');
 
-var maxHeight = 3;
+var maxHeight = 2;
 
 var dims = {
 	height: window.innerHeight,
@@ -23,17 +25,24 @@ $(window).on('resize', function(){
 	// });
 })
 
-socket.on('drone-status', function (data) {
-	if(!data.demo) return;
+socket.on('drone-status', function (alt) {
+	console.log(alt);
+	if(!alt) return;
 
-	var heightInM = data.demo.altitude;
+	var heightInM = alt;
 
-	var newHeight = (dims.height - (maxHeight - heightInM));
+	var newHeight = (((heightInM / maxHeight) * dims.height) * -1) + dims.height + (dims.height/10);
 
-	TweenLite.to(birdEl, .2, {
+	console.log(alt, newHeight);
+
+	TweenLite.to(birdEl, .3, {
 		y: newHeight
 	})
 });
+
+socket.on('game-over', function(data){
+
+})
 
 function tap() {
   console.log('tap');
