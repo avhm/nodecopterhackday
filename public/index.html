@@ -1,20 +1,27 @@
-<head></head>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flappy Drone</title>
+	<script src="js/lib/greensock/TweenLite.js"></script>
+	<script src="js/lib/greensock/easing/EasePack.js"></script>
+	<script src="js/lib/greensock/plugins/CSSPlugin.js"></script>
+
+	<script src="js/lib/zepto.min.js"></script>
+
+	<script src="js/lib/socket.io/socket.io.js"></script>
+	<script src="js/lib/touch.js"></script>
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
 <body>
-<script src="/socket.io/socket.io.js"></script>
-<script src="zepto.min.js"></script>
-<script src="touch.js"></script>
-<script>
-var socket = io.connect(window.location.href);
-socket.on('news', function (data) {
-  console.log(data);
-});
 
-function tap() {
-  console.log('tap');
-  socket.emit('tap');
-}
-
-$('body').on('click', tap).on('tap', tap);
-
-</script>
+<div class="levelWrapper">
+	<div class="bird">
+		
+	</div>
+</div>
+	
+<script src="js/main.js"></script>
 </body>
+</html>
