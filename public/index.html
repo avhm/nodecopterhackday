@@ -1,9 +1,12 @@
 <head></head>
 <body>
 <script src="zepto.min.js"></script>
+<script src="touch.js"></script>
 <script>
-$('body').on('click', function() {
-  alert();
-});
+function tap() {
+  alert('tap');
+}
+
+$('body').on('click', tap).on('tap', tap);
 </script>
 </body>
