@@ -4,16 +4,17 @@
 <script src="zepto.min.js"></script>
 <script src="touch.js"></script>
 <script>
+var socket = io.connect(window.location.href);
+socket.on('news', function (data) {
+  console.log(data);
+});
+
 function tap() {
   console.log('tap');
+  socket.emit('tap');
 }
 
 $('body').on('click', tap).on('tap', tap);
 
-var socket = io.connect(window.location.href);
-socket.on('news', function (data) {
-  console.log(data);
-  // socket.emit('my other event', { my: 'data' });
-});
 </script>
 </body>
