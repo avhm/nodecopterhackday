@@ -51,3 +51,7 @@ function jump(){
   }, 400);
 
 }
+
+module.exports.jump = jump;
+module.exports.jump = jump;
+module.exports.clientEmitter = client;
