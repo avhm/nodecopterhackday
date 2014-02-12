@@ -2,6 +2,7 @@ var socket = io.connect(window.location.href);
 var birdEl = document.querySelector('.bird');
 var gameOverEl = document.querySelector('.gameOver');
 var getReadyEl = document.querySelector('.getReady');
+var gameOverFlag = true;
 
 var maxHeight = 2;
 
@@ -36,6 +37,7 @@ socket.on('drone-status', function (alt) {
 });
 
 socket.on('game-over', function(data){
+	var gameOverFlag = true;
 	gameOver();
 })
 
@@ -59,11 +61,20 @@ function gameStart(){
 			opacity: 0
 		})		
 	}, 500)
+
+	gameOverFlag = false;
 }
 
 function tap() {
   console.log('tap');
   socket.emit('tap');
+  if(gameOverFlag){
+  	gameStart();
+  }
 }
+
+TweenLite.set(gameOverEl, {
+	opacity:0
+})
 
 $('body').on('click', tap).on('tap', tap);

@@ -28,7 +28,7 @@ function quit(){
 function start(){
   client.takeoff();
   client.on('navdata', function(data){
-    if(!data.demo) return;
+    if(!data.demo || !gameon) return;
     // If height below tolerance, end the game!
     if(data.demo.altitude < minDroneHeight){
       console.log('GAME OVER!!!');
@@ -45,7 +45,9 @@ function jump(){
     start();
     // client.front(.1);
     console.log('BATTERY STATUS:', client.battery());
-    gameon = true;
+    setTimeout(function(){
+      gameon = true;
+    }, 15000);
   }
 
   if(currentJump){
