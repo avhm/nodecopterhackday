@@ -1,5 +1,7 @@
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
+var arDrone = require('ar-drone');
+var client = arDrone.createClient();
 
 var emitter = new EventEmitter();
 
@@ -15,11 +17,31 @@ process.stdin.on('data', function (text) {
 
 function done() {
   console.log('Now that process.stdin is paused, there is nothing more to do.');
+  this.stop();
+  this.land();
   process.exit();
 }
 
+client.takeoff();
+
+var step;
+
 emitter.on('enter', function() {
-  console.log('up!');
+
+  if(step){
+    clearTimeout(step);
+  }
+  
+  client.up(1);
+
+  step = setTimeout(function(){
+    client.down(.7);
+  }, 400);
+
+});
+
+emitter.on('enter', function() {
+
 });
 
 module.exports = emitter;
