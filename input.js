@@ -14,4 +14,8 @@ process.stdin.on('data', function (text) {
   }
 });
 
+process.on('SIGINT', function() {
+  emitter.emit('quit');
+});
+
 module.exports = emitter;
