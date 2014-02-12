@@ -1,10 +1,6 @@
-var express = require('express');
-var app = express();
+var socket = require('socket.io-client')('http://localhost');
 
-app.get('/hello.txt', function(req, res){
-  res.send('Hello World');
+socket.on('connect', function(){
+	socket.on('event', function(data){});
+	socket.on('disconnect', function(){});
 });
-
-app.listen(3000);
-console.log('Listening on port 3000');
-
