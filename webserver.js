@@ -8,17 +8,16 @@ var app = express()
 
 server.listen(8080);
 
-client.on('navdata', function(data){
-    if(!data.demo) return;
-    // If height below tolerance, end the game!
-    droneStatus = data;
-  });
 
 app.use(express.static('public'));
 
 io.sockets.on('connection', function (socket) {
 
-  socket.emit('drone-status', droneStatus);
+  client.on('navdata', function(data){
+    if(!data.demo) return;
+    // If height below tolerance, end the game!
+    socket.emit('drone-status', data.demo.altitude);
+  });
 
   socket.on('tap', function (data) {
     console.log('Tap detected');
