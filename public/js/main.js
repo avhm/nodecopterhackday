@@ -69,6 +69,7 @@ function tap() {
   console.log('tap');
   socket.emit('tap');
   if(gameOverFlag){
+  	console.log('starting game!');
   	gameStart();
   }
 }

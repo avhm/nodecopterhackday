@@ -19,7 +19,7 @@ function gameover(){
 function quit(){
   gameover();  
  console.log('Killing!')
- setTimeout(process.exit, 1000);
+ setTimeout(process.exit, 5000);
   // prevent being called again
  quit = function(){};
   
