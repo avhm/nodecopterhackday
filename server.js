@@ -9,19 +9,20 @@ var gameon = false;
 input.on('quit', quit);
 input.on('enter', jump);
 
-client.takeoff();
 
 function quit(){
   client.stop();
   client.land();
-  console.log('Killing!')
-  setTimeout(process.exit, 1000);
+  gameon = false;
+//  console.log('Killing!')
+//  setTimeout(process.exit, 1000);
   // prevent being called again
-  quit = function(){};
+//  quit = function(){};
   
 }
 
 function start(){
+  client.takeoff();
   client.on('navdata', function(data){
     if(!data.demo) return;
     // If height below tolerance, end the game!
@@ -56,6 +57,7 @@ function jump(){
 
 }
 
-module.exports.jump = jump;
+
 module.exports.jump = jump;
 module.exports.clientEmitter = client;
+module.exports.gameOver = gameOver;
