@@ -47,6 +47,7 @@ function jump(){
     clearTimeout(currentJump);
   }
   
+  console.log('drone going up');
   client.up(1);
 
   currentJump = setTimeout(function(){
